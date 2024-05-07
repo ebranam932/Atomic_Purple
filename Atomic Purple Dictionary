@@ -24,7 +24,7 @@ Users can be trained to identify social engineering techniques and phishing emai
 
 
 
-While True:
+while True:
   userinput = input("Enter the attack you want to mitigate (or type 'exit' to quit): ")
 if userinput == 'exit':  
  print("Exiting the progam!!")
