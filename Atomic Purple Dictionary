@@ -32,7 +32,7 @@ atomic_purple_defense = {
 
 def atomic_purple():
 
-while True:
+while true:
   userinput = input("Enter the attack or defense (or type 'exit' to quit): ").lower()
 if userinput == 'exit':  
  print("Exiting the progam!!")
