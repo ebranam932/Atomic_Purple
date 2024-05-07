@@ -2,6 +2,7 @@
 
 atomic_purple_attacks = {
 "Boot or Logon Autostart Execution": "ID:T1547",
+"Brute Force": "ID:1110"
 "Phishing": "ID:T1660",
 "Impair Defenses": "ID:1562"
     }
@@ -45,6 +46,13 @@ def atomic_purple():
     if userinput == 'exit':
         print("Exiting the program!!")
         break
+    elif user_input == "brute force"
+    answer = input("Would you like to check for failed logins")
+        if answer == "yes":
+            failed_login()
+        else print("no function called")
+
+
     elif userinput in atomic_purple_attacks:
         print("Defense for", userinput, "is", atomic_purple_attacks[userinput])
     elif userinput in atomic_purple_defense:
