@@ -1,23 +1,31 @@
+#!/usr/bin/python3
+
 atomic_purple_attacks = {
-"Boot or Logon Autostart Execution": "ID:T1547" 
-"Phishing": "ID:T1660" 
+"Boot or Logon Autostart Execution": "ID:T1547",
+"Phishing": "ID:T1660",
+"Impair Defenses": "ID:1562"
+    }
 
 
 atomic_purple_defense = {
-"Impair Defenses": "ID:1562" "Defense": 
 
-"M1047 Audit: Routinely check account role permissions to ensure only expected users and roles have permission to modify defensive tools and settings." 
+"M1047 Audit: Routinely check account role permissions to ensure only expected users and roles have permission to modify defensive tools and settings."
 
-"M1038 Execution Prevention: Use application control where appropriate, especially regarding the execution of tools outside of the organization's security policies (such as rootkit removal tools) that have been abused to impair system defenses. Ensure that only approved security applications are used and running on enterprise systems." 
+"M1038 Execution Prevention: Use application control where appropriate, especially regarding the execution of tools outside of the organization's security policies (such as rootkit removal tools) that have been abused to impair system defenses. Ensure that only approved security applications are used and running on enterprise systems."
 
-"M1022 Restrict File and Directory Permissions: Ensure proper process and file permissions are in place to prevent adversaries from disabling or interfering with security/logging services." 
+"M1022 Restrict File and Directory Permissions: Ensure proper process and file permissions are in place to prevent adversaries from disabling or interfering with security/logging services."
 
 "M1024 Restrict Registry Permissions: Ensure proper Registry permissions are in place to prevent adversaries from disabling or interfering with security/logging services."
 
 "M1054 Software Configuration: Consider implementing policies on internal web servers, such HTTP Strict Transport Security, that enforce the use of HTTPS/network traffic encryption to prevent insecure connections."
 
+"M1018 User Account Management: Ensure proper user permissions are in place to prevent adversaries from disabling or interfering with security/logging services."
 
+    }
 
+ a_d= {
+ dict(atomic_purple_attacks)
+ }
 
 
 
@@ -32,18 +40,18 @@ atomic_purple_defense = {
 
 def atomic_purple():
 
-while true:
-  userinput = input("Enter the attack or defense (or type 'exit' to quit): ").lower()
-if userinput == 'exit':  
- print("Exiting the progam!!")
-  break
-if userinput in atomic_purple_attacks:
-  print("Defense for", userinput, "is", atomic_purple_attacks[userinput])
-elif userinput in atomic_purple_defense:
-  print("Attack for", userinput, "is", atomic_purple_defense[userinput])
-{atomic_purple_attacks[userinput]}
-  else:
-      print("Attack not found, enter valid attack")
+ while True:
+    userinput = input("Enter the attack or defense (or type 'exit' to quit): ")
+    if userinput == 'exit':
+        print("Exiting the program!!")
+        break
+    elif userinput in atomic_purple_attacks:
+        print("Defense for", userinput, "is", atomic_purple_attacks[userinput])
+    elif userinput in atomic_purple_defense:
+        print("Attack for", userinput, "is", atomic_purple_defense[userinput])
+        {atomic_purple_attacks[userinput]}
+    else:
+        print("Attack not found, enter valid attack")
 
 #test the function
 atomic_purple()
