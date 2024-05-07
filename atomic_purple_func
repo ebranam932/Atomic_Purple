@@ -1,0 +1,19 @@
+#!/usr/bin/python3
+
+def atomic_purple():
+
+ while True:
+    userinput = input("Enter the attack or defense (or type 'exit' to quit): ")
+    if userinput == 'exit':
+        print("Exiting the program!!")
+        break
+    elif userinput in atomic_purple_attacks:
+        print("Defense for", userinput, "is", atomic_purple_attacks[userinput])
+    elif userinput in atomic_purple_defense:
+        print("Attack for", userinput, "is", atomic_purple_defense[userinput])
+        {atomic_purple_attacks[userinput]}
+    else:
+        print("Attack not found, enter valid attack")
+
+#test the function
+atomic_purple()
