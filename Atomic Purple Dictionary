@@ -1,4 +1,4 @@
-atomic_purple = {
+atomic_purple_dictionary = {
 "Boot or Logon Autostart Execution": "ID:T1547" "Defense: This type of attack technique cannot be easily mitigated with preventive controls since it is based on the abuse of system features.
 "Phishing": "ID:T1660" "Defense: M1058	Antivirus/Antimalware	
 Some mobile security products offer a loopback VPN used for inspecting traffic. This could proactively block traffic to websites that are known for phishing or appear to be conducting a phishing attack. M1011 User Guidance	
@@ -22,15 +22,15 @@ Users can be trained to identify social engineering techniques and phishing emai
 
 
 
-
+def atomic_purple():
 
 while True:
   userinput = input("Enter the attack you want to mitigate (or type 'exit' to quit): ")
 if userinput == 'exit':  
  print("Exiting the progam!!")
   break
-if user input in atomic_purple:
+if user input in atomic_purple_dictionary:
   print(f"{userinput}:
-{atomic_purple[userinput]}
+{atomic_purple_dictionary[userinput]}
   else:
       print("Attack not found, enter valid attack")
