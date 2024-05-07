@@ -1,8 +1,6 @@
 atomic_purple_attacks = {
-"Boot or Logon Autostart Execution": "ID:T1547" "Defense: This type of attack technique cannot be easily mitigated with preventive controls since it is based on the abuse of system features.
-"Phishing": "ID:T1660" "Defense: M1058	Antivirus/Antimalware	
-Some mobile security products offer a loopback VPN used for inspecting traffic. This could proactively block traffic to websites that are known for phishing or appear to be conducting a phishing attack. M1011 User Guidance	
-Users can be trained to identify social engineering techniques and phishing emails."
+"Boot or Logon Autostart Execution": "ID:T1547" 
+"Phishing": "ID:T1660" 
 
 
 atomic_purple_defense = {
