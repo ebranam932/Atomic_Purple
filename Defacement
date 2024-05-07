@@ -1,6 +1,6 @@
 $orgLegalNoticeCaption = (Get-ItemProperty HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System -Name LegalNoticeCaption).LegalNoticeCaption
 $orgLegalNoticeText = (Get-ItemProperty HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System -Name LegalNoticeText).LegalNoticeText
-$newLegalNoticeCaption = "#{legal_notice_caption}"
-$newLegalNoticeText = "#{legal_notice_text}"
+$newLegalNoticeCaption = "#{Ransom Note}"
+$newLegalNoticeText = "#{Your hard drive has been encrypted please pay ransom to release it}"
 Set-ItemProperty HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System -Name LegalNoticeCaption -Value $newLegalNoticeCaption -Type String -Force
 Set-ItemProperty HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System -Name LegalNoticeText -Value $newLegalNoticeText -Type String -Force
