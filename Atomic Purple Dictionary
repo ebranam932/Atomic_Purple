@@ -1,11 +1,11 @@
-atomic_purple_dictionary = {
+atomic_purple_attacks = {
 "Boot or Logon Autostart Execution": "ID:T1547" "Defense: This type of attack technique cannot be easily mitigated with preventive controls since it is based on the abuse of system features.
 "Phishing": "ID:T1660" "Defense: M1058	Antivirus/Antimalware	
 Some mobile security products offer a loopback VPN used for inspecting traffic. This could proactively block traffic to websites that are known for phishing or appear to be conducting a phishing attack. M1011 User Guidance	
 Users can be trained to identify social engineering techniques and phishing emails."
 
 
-
+atomic_purple_defense = {
 "Impair Defenses": "ID:1562" "Defense": 
 
 "M1047 Audit: Routinely check account role permissions to ensure only expected users and roles have permission to modify defensive tools and settings." 
@@ -35,12 +35,17 @@ Users can be trained to identify social engineering techniques and phishing emai
 def atomic_purple():
 
 while True:
-  userinput = input("Enter the attack you want to mitigate (or type 'exit' to quit): ")
+  userinput = input("Enter the attack or defense (or type 'exit' to quit): ").lower()
 if userinput == 'exit':  
  print("Exiting the progam!!")
   break
-if user input in atomic_purple_dictionary:
-  print(f"{userinput}:
-{atomic_purple_dictionary[userinput]}
+if userinput in atomic_purple_attacks:
+  print("Defense for", userinput, "is", atomic_purple_attacks[userinput])
+elif userinput in atomic_purple_defense:
+  print("Attack for", userinput, "is", atomic_purple_defense[userinput])
+{atomic_purple_attacks[userinput]}
   else:
       print("Attack not found, enter valid attack")
+
+#test the function
+atomic_purple()
