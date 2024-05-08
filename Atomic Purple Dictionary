@@ -1,7 +1,5 @@
 #!/usr/bin/python
-
-
-
+import re
 
 atomic_purple_attacks = {
 "Boot or Logon Autostart Execution": "ID:T1547",
@@ -49,7 +47,7 @@ def atomic_purple():
     elif userinput == "brute force":
         answer = input("Would you like to check for failed logins:")
         if answer == "yes":
-            failed_login(log_file)
+            failed_login
         else: 
             print("no function called")
 
@@ -64,4 +62,20 @@ def atomic_purple():
 
 #test the function
 atomic_purple()
+
+log_file = "/var/log/auth.log"
+
+def failed_login(log_file):
+    with open(log_file, "r") as file:
+        pattern = r"authentication failure"
+        regex = re.compile(pattern)
+        
+        failed_attempts = 0
+        for line in file:
+            if regex.search(line):
+                failed_attempts += 1
+                    
+        print(f"Number of failed login attempts: {failed_attempts}")
+
+failed_login(log_file)
 
