@@ -1,0 +1,19 @@
+import socket
+
+def get_ip_address():
+    try:
+        # Get the hostname of the system
+        hostname = socket.gethostname()
+        # Get the IP address associated with the hostname
+        ip_address = socket.gethostbyname(hostname)
+        return ip_address
+    except Exception as e:
+        print("Error:", e)
+        return None
+
+if __name__ == "__main__":
+    ip_address = get_ip_address()
+    if ip_address:
+        print("IP Address:", ip_address)
+    else:
+        print("Failed to retrieve IP address.")
