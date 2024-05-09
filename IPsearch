@@ -1,0 +1,21 @@
+import requests
+
+def get_public_ip():
+    try:
+        # Use an external service to fetch the public IP address
+        response = requests.get('https://api.ipify.org')
+        if response.status_code == 200:
+            return response.text
+        else:
+            print("Failed to fetch IP address. Status code:", response.status_code)
+            return None
+    except Exception as e:
+        print("Error:", e)
+        return None
+
+if __name__ == "__main__":
+    public_ip = get_public_ip()
+    if public_ip:
+        print("Public IP Address:", public_ip)
+    else:
+        print("Failed to retrieve public IP address.")
