@@ -2,35 +2,37 @@
 import re
 import socket
 
+    # Enumerates possible attack vectors
 atomic_purple_attacks = {
-    "Boot or Logon Autostart Execution": "ID:T1547",
+    # "Boot or Logon Autostart Execution": "ID:T1547",
     "Brute Force": "ID:1110",
-    "Phishing": "ID:T1660",
-    "Impair Defenses": "ID:1562",
+    # "Phishing": "ID:T1660",
+    # "Impair Defenses": "ID:T1562",
 }
 
+    # Enumerates defense possibilities for various attacks
 atomic_purple_defense = {
-    "M1047 Audit: Routinely check account role permissions to ensure only expected users and roles have permission to modify defensive tools and settings.",
-    "M1038 Execution Prevention: Use application control where appropriate, especially regarding the execution of tools outside of the organization's security policies (such as rootkit removal tools) that have been abused to impair system defenses. Ensure that only approved security applications are used and running on enterprise systems.",
-    "M1022 Restrict File and Directory Permissions: Ensure proper process and file permissions are in place to prevent adversaries from disabling or interfering with security/logging services.",
-    "M1024 Restrict Registry Permissions: Ensure proper Registry permissions are in place to prevent adversaries from disabling or interfering with security/logging services.",
-    "M1054 Software Configuration: Consider implementing policies on internal web servers, such HTTP Strict Transport Security, that enforce the use of HTTPS/network traffic encryption to prevent insecure connections.",
-    "M1018 User Account Management: Ensure proper user permissions are in place to prevent adversaries from disabling or interfering with security/logging services.",
+    # "M1047 Audit: Routinely check account role permissions to ensure only expected users and roles have permission to modify defensive tools and settings.",
+    # "M1038 Execution Prevention: Use application control where appropriate, especially regarding the execution of tools outside of the organization's security policies (such as rootkit removal tools) that have been abused to impair system defenses. Ensure that only approved security applications are used and running on enterprise systems.",
+    # "M1022 Restrict File and Directory Permissions: Ensure proper process and file permissions are in place to prevent adversaries from disabling or interfering with security/logging services.",
+    # "M1024 Restrict Registry Permissions: Ensure proper Registry permissions are in place to prevent adversaries from disabling or interfering with security/logging services.",
+    # "M1054 Software Configuration: Consider implementing policies on internal web servers, such HTTP Strict Transport Security, that enforce the use of HTTPS/network traffic encryption to prevent insecure connections.",
+    # "M1018 User Account Management: Ensure proper user permissions are in place to prevent adversaries from disabling or interfering with security/logging services.",
 }
 
-log_file = "/var/log/auth.log"
-
+    # Get IPv4 address for local machine to scan for vulnerabilities
 def get_ip_address():
     try:
-        # Get the hostname of the system
+            # Get the hostname of the system
         hostname = socket.gethostname()
-        # Get the IP address associated with the hostname
+            # Get the IP address associated with the hostname
         ip_address = socket.gethostbyname(hostname)
         return ip_address
     except Exception as e:
         print("Error:", e)
         return None
 
+    # Ensures the system running the IPv4 address function is the local machine. If it is, run the function. If not, error out
 if __name__ == "__main__":
     ip_address = get_ip_address()
     if ip_address:
@@ -38,34 +40,46 @@ if __name__ == "__main__":
     else:
         print("Failed to retrieve IP address.")
 
+
+    # Log file to search for failed logins
+log_file = "/var/log/auth.log"
+
+    # Login failure scan using /var/log/ file defined above
 def failed_login(log_file):
     with open(log_file, "r") as file:
-        pattern = r"authentication failure"
+            # /var/log/auth.log uses "authentication failure" to indicate failed login. Use that to find events where that occurred
+        pattern = r"authentication failure" 
         regex = re.compile(pattern)
-        
+
+            # Start failed attempts counter
         failed_attempts = 0
+            # Search line by line for pattern listed above. If present, increment counter by 1
         for line in file:
             if regex.search(line):
                 failed_attempts += 1
                     
         print(f"Number of failed login attempts: {failed_attempts}")
 
+    # Main function, asks user for attack name and provides defense options
 def atomic_purple():
-    while True:
-        userinput = input("Enter the attack or defense (or type 'exit' to quit): ")
+        #Asks user for attack to search for, gives opportunity to exit
+    userinput = input("Enter the attack or defense (or type 'exit' to quit): ")
         if userinput == 'exit':
             print("Exiting the program!!")
             break
+            # Ensures whatever case type user inputs, the string is made lowercase, then checked to see if it matches the "if" condition
         elif userinput.lower() == "brute force":
-            answer = input("Would you like to check for failed logins:")
+                # Brute force commonly involves multiple login attempts, checking logs is detection strategy
+            answer = input("Would you like to check for failed logins (yes/no):")
+                # Runs failed login function described above, detects 10 or more failed logins in /var/log/auth.log
             if answer.lower() == "yes":
                 failed_login(log_file)
             else: 
                 print("no function called")
-        elif userinput in atomic_purple_attacks:
-            print("Defense for", userinput, "is", atomic_purple_attacks[userinput])
-        elif userinput in atomic_purple_defense:
-            print("Attack for", userinput, "is", atomic_purple_defense[userinput])
+        # elif userinput in atomic_purple_attacks:
+            # print("Defense for", userinput, "is", atomic_purple_attacks[userinput])
+        # elif userinput in atomic_purple_defense:
+            # print("Attack for", userinput, "is", atomic_purple_defense[userinput])
         else:
             print("Attack not found, enter valid attack")
 
