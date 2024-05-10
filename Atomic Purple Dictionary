@@ -22,6 +22,21 @@ atomic_purple_defense = {
 }
 
     # Get IPv4 address for local machine to scan for vulnerabilities
+def snortids():
+    try:
+        snortcommand = "sudo sbin/snort -A console -q -c /etc/snort/snort.conf"
+        snortresult = subprocess.run(snortcommand, shell=True, capture_output=True, text=True)
+        
+        # Print the standard output (stdout) of the Snort process
+        print("Snort Output:")
+        print(snortresult.stdout)
+
+        # Print the standard error (stderr) of the Snort process
+        print("Snort Error Output:")
+        print(snortresult.stderr)
+
+    except Exception as e:
+        print("Error:", e)
 
 
 def get_ip_address():
@@ -88,7 +103,13 @@ def atomic_purple():
     userinput = input("Enter the attack or defense (or type 'exit' to quit): ")
     if userinput == 'exit':
         print("Exiting the program!!")
-        
+    
+       elif userinput.lower() == "stealth attack":
+        answer2 = input("Would you like to enable snort IDS.(yes/no)")
+        if answer2.lower == "yes":
+            snortids(snortresult) 
+
+    
     elif userinput.lower() == "dos":
         answer1 = input("Would you like to scan for vulnerabilities(yes/no)")
         if answer1.lower() == "yes":
