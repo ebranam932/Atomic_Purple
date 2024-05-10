@@ -1,3 +1,9 @@
+#!/usr/bin/python
+import re
+import socket
+import subprocess
+import os
+
 def snortids():
     try:
         snortcommand = "sudo snort -A console -q -c /etc/snort/snort.conf"
