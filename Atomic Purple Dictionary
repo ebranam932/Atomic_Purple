@@ -104,7 +104,7 @@ def atomic_purple():
     if userinput == 'exit':
         print("Exiting the program!!")
     
-       elif userinput.lower() == "stealth attack":
+    elif userinput.lower() == "stealth attack":
         answer2 = input("Would you like to enable snort IDS.(yes/no)")
         if answer2.lower == "yes":
             snortids(snortresult) 
