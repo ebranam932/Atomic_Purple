@@ -4,115 +4,124 @@ import socket
 import subprocess
 import os
 
+# Automate Snort command to scan for stealth attacks (where attacker terminates TCP handshake after determining port exists and is listening)
 def snortids():
     try:
         snortcommand = "sudo snort -A console -q -c /etc/snort/snort.conf"
         snortresult = subprocess.run(snortcommand, shell=True)
 
         # Print the standard output (stdout) of the Snort process
-        #print("Snort Output:")
-        #print(snortresult.stdout)
+        print("Snort Output:")
+        print(snortresult.stdout)
 
         # Print the standard error (stderr) of the Snort process
-        #print("Snort Error Output:")
-        #print(snortresult.stderr)
-
+        print("Snort Error Output:")
+        print(snortresult.stderr)
+    
+    # If an exception happens, print what the error is
     except Exception as e:
         print("Error:", e)
 
-
+# Get IPv4 address for local machine to scan for vulnerabilities
 def get_ip_address():
     try:
         # Get the hostname of the system
         hostname = socket.gethostname()
+        
         # Get the IP address associated with the hostname
         ip_address = socket.gethostbyname(hostname)
         return ip_address
+    
     except Exception as e:
         print("Error:", e)
         return None
 
+# Ensures the script wasn't imported from somewhere else, which will negatively affect directions to file locations if it was
 if __name__ == "__main__":
     ip_address = get_ip_address()
-    #if ip_address:
-       # print("IP Address:", ip_address)
+    if ip_address:
+        print("IP Address:", ip_address)
+    else:
+        print("Failed to retrieve IP address.")
+
+#def download_and_run_nmap(ip_address):
+        #if vulners.nse in /*:
+    #except NameError:
+        #nmap-vulners_exists == False
     #else:
-        #print("Failed to retrieve IP address.")
+        #nmap-vulners_exists == True
 
-def download_and_run_nmap(ip_address):
-    try:
-        # Run git clone command to download files from GitHub repository
-        #command = "git clone https://github.com/vulnersCom/nmap-vulners.git"
-        #if nmap-vulners
+    #if nmap-vulners_exists == False:
+        try:
+            # Run git clone command to download files from GitHub repository
+            # command = "git clone https://github.com/vulnersCom/nmap-vulners.git"
 
-       # subprocess.run(command, shell=True, check=True)
-        # Change directory to the downloaded repository
-        #os.chdir("repository")
-
-        # Construct the Nmap command
-        nmap_command = f"nmap --script nmap-vulners/ -sV {ip_address}"
-        # Run the Nmap scan using subprocess
-        nmap_result = subprocess.run(nmap_command, shell=True, capture_output=True, text=True)
-        # Print the Nmap scan output
-        print("Nmap Scan Result:")
-        print(nmap_result.stdout)
-    except Exception as e:
-        print("Error:", e)
+            # Construct the Nmap command
+            nmap_command = f"nmap --script nmap-vulners/ -sV {ip_address}"
+            # Run the Nmap scan using subprocess
+            nmap_result = subprocess.run(nmap_command, shell=True)
+            # Print the Nmap scan output
+            print("Nmap Scan Result:")
+            print(nmap_result.stdout)
+        
+        except Exception as e:
+            print("Error:", e)
+    else:
+        print("nmap-vulners exists")
 
 
     # Log file to search for failed logins
 log_file = "/var/log/auth.log"
 
-    # Login failure scan using /var/log/ file defined above
+# Login failure scan using /var/log/ file defined above
 def failed_login(log_file):
     with open(log_file, "r") as file:
-            # /var/log/auth.log uses "authentication failure" to indicate failed login. Use that to find events where that occurred
+        
+        # /var/log/auth.log uses "authentication failure" to indicate failed login. Use that to find events where that occurred
         pattern = r"authentication failure"
         regex = re.compile(pattern)
 
-            # Start failed attempts counter
+        # Start failed attempts counter
         failed_attempts = 0
-            # Search line by line for pattern listed above. If present, increment counter by 1
+
+        # Search line by line for pattern listed above. If present, increment counter by 1
         for line in file:
             if regex.search(line):
                 failed_attempts += 1
 
         print(f"Number of failed login attempts: {failed_attempts}")
 
-    # Main function, asks user for attack name and provides defense options
+# Main function, asks user for attack name and provides defense options
 def atomic_purple():
-        #Asks user for attack to search for, gives opportunity to exit
-    userinput = input("Enter the attack or defense (or type 'exit' to quit): ")
+    # Asks user for attack to search for, gives opportunity to exit
+    userinput = input("Enter the attack or defense you'd like to scan for (or type 'exit' to quit): ")
     if userinput == 'exit':
         print("Exiting the program!!")
 
+    # Stealth attacks involve initiating a TCP handshake, then terminating it before completion to recon any potential active ports, so running a snort IDS scanner will relay any potentially problematic activity
     elif userinput.lower() == "stealth attack":
-        answer2 = input("Would you like to enable snort IDS.(yes/no)")
-        if answer2.lower() == "yes":
+        answer2 = input("Would you like to enable Snort IDS? (y/n)")
+        if answer2.lower() == "y":
             snortids()
 
-
-
-
+    # Denial of Service attacks involve overloading the network's ports and nmap shows the ports on the system, and the --vulners script detects various known vulnerabilities for those ports
     elif userinput.lower() == "dos":
-        answer1 = input("Would you like to scan for vulnerabilities(yes/no)")
-        if answer1.lower() == "yes":
+        answer1 = input("Would you like to scan for vulnerabilities? (y/n): ")
+        if answer1.lower() == "y":
             download_and_run_nmap(ip_address)
 
+    # Brute force commonly involves multiple login attempts, checking logs is detection strategy
     elif userinput.lower() == "brute force":
-                # Brute force commonly involves multiple login attempts, checking logs is detection strategy
-        answer = input("Would you like to check for failed logins (yes/no):")
-                # Runs failed login function described above, detects 10 or more failed logins in /var/log/auth.log
-        if answer.lower() == "yes":
+        answer = input("Would you like to check for failed logins? (y/n): ")
+
+        # Runs failed login function described above, detects 10 or more failed logins in /var/log/auth.log
+        if answer.lower() == "y":
                 failed_login(log_file)
         else:
             print("no function called")
-        # elif userinput in atomic_purple_attacks:
-            # print("Defense for", userinput, "is", atomic_purple_attacks[userinput])
-        # elif userinput in atomic_purple_defense:
-            # print("Attack for", userinput, "is", atomic_purple_defense[userinput])
-            #else:
-                #print("Attack not found, enter valid attack")
+
+    else:
+        print("Attack not found, enter valid attack")
 
 # Test the function
 atomic_purple()
