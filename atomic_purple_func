@@ -5,6 +5,7 @@ import subprocess
 import os
 
 # Automate Snort command to scan for stealth attacks (where attacker terminates TCP handshake after determining port exists and is listening)
+#$ git clone https://github.com/snort3/libdaq.git to install repository
 def snortids():
     try:
         snortcommand = "sudo snort -A console -q -c /etc/snort/snort.conf"
